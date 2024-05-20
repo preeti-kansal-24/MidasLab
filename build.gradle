@@ -1,0 +1,17 @@
+buildscript {
+  repositories {
+    mavenCentral()
+    maven {
+      url "https://nexus.goorange.sixt.com/nexus/content/groups/public/"
+    }
+  }
+  dependencies {
+    classpath 'com.sixt.gradle:go:0.5.+'
+  }
+}
+
+apply plugin: 'com.sixt.gradle.go'
+
+go {
+  linter = ["golint"]
+}

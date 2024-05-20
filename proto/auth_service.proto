@@ -1,0 +1,64 @@
+syntax = "proto3";
+
+package midas;
+
+option java_multiple_files = true;
+option java_package = "midas.api"; //Must use underscores (no dashes)!
+option go_package="github.com/preeti-kansal-24/MidasLab";
+
+import "google/api/annotations.proto";
+
+
+service AuthService {
+  rpc SignupWithPhoneNumber(SignupWithPhoneNumberRequest) returns (SignupWithPhoneNumberResponse){
+    option (google.api.http) = {
+      post: "/midas.api/SignUp"
+    };
+  }
+  rpc VerifyNumber(VerifyNumberReq) returns (VerifyNumberResp){
+    option (google.api.http) = {
+      post: "/midas.api/VerifyNumber"
+    };
+  }
+  rpc Login(VerifyNumberReq) returns (VerifyNumberResp){
+    option (google.api.http) = {
+      post: "/midas.api/Login"
+    };
+  }
+  rpc GetProfile(GetProfileReq) returns (GetProfileResponse){
+    option (google.api.http) = {
+      post: "/midas.api/GetProfile"
+    };
+  }
+}
+
+
+message SignupWithPhoneNumberRequest{
+  string name = 1;
+  string email = 2;
+  string phone_number = 3; //@gotags: validate:"required"
+}
+
+message SignupWithPhoneNumberResponse {
+  uint32 user_id = 1;
+}
+
+message VerifyNumberReq{
+  string phone_number = 1; //@gotags: validate:"required"
+  string otp = 2; //@gotags: validate:"required"
+}
+
+message VerifyNumberResp {
+  string message = 1;
+}
+
+message GetProfileReq{
+  string phone_number = 1; //@gotags: validate:"required"
+}
+
+message GetProfileResponse{
+  uint32 id = 1;
+  string name = 2;
+  string email = 3;
+  string phone_number = 4;
+}
